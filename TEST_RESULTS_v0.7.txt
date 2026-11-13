@@ -1,0 +1,10 @@
+OG Tools v0.7 — verification, 2026-11-13
+
+PASS: 33 Python tests on Linux with FFmpeg: real video output for creator captions, Arabic ASS preview, creator zoom, speed ramp with audio, silence analysis/cut and existing tools.
+PASS: 17 JavaScript Node tests using mocked Premiere UXP APIs: keyframe safety/curves and selected local-media clip resolution.
+PASS: syntax checks of 4 plugin JavaScript files; UXP manifest JSON valid.
+PASS: zip contains all required engine/plugin files and sample media (checked after package creation).
+
+NOT TESTED: Adobe Premiere 2026 host runtime / real timeline transaction; Windows + UXP installation; Arabic speech-to-text inference using faster-whisper (not installed/model not available); GPU optional inference; GitHub Windows Actions; Adobe-signed .ccx package.
+
+Scope: v0.7 is an engineering build with new real offline functionality, not a finished commercial plugin or a clone of proprietary VOLT presets.

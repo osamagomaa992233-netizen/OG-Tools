@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>OG Tools · Premiere 2026</title><link rel="stylesheet" href="style.css"/></head>
+<body><header class="topbar"><div class="mark">OG<span>•</span></div><div class="brand"><h1>OG Tools</h1><small>PRIVATE CREATIVE ENGINE · V0.8</small></div><div class="connection" id="connection">ENGINE OFF</div></header>
+<main>
+<section class="hero"><p class="eyebrow">PREMIERE PRO 2026</p><h2>Your edit. Your tools.</h2><p>Local processing for your media. Original motion presets. No mandatory paid APIs.</p><div class="quick"><button id="inspect">Inspect project</button><button id="refresh" class="outline">Reconnect engine</button></div><div class="project" id="project">Premiere project: not checked</div></section>
+<section class="native-stage"><div class="section-head"><h3>Native Keyframe Studio</h3><span>Editable Premiere motion</span></div>
+<p class="muted">Select one text/graphic clip in the timeline. Apply <b>actual Effect Controls keyframes</b>—not a rendered MOV. Original text remains editable.</p>
+<div class="native-grid"><div><label class="field-label" for="nativePreset">Motion preset</label><select id="nativePreset"></select></div><div><label class="field-label" for="nativeDuration">Duration (seconds)</label><input id="nativeDuration" type="number" min="0.2" max="30" step="0.1" value="1.2"></div></div>
+<div class="native-grid"><div><label class="field-label" for="nativeSamples">Keyframe density</label><select id="nativeSamples"><option value="9">9 keys / property</option><option value="13" selected>13 keys / property</option><option value="21">21 keys / property</option></select></div><div class="native-actions"><button id="nativeInspect" class="outline">Inspect selected</button></div></div>
+<p class="muted" style="font-size:12px">Creator Zoom presets: choose <b>creator-punch-in</b>, <b>creator-reaction</b>, <b>creator-snap-zoom</b>, etc. They add actual Scale keyframes to your selected clip. Existing keys are protected.</p><div id="nativeMappings" class="native-mappings hide"><p class="muted">Motion parameter mapping (for different locales or graphic types)</p><div id="nativeMappingFields"></div></div>
+<button id="nativeApply" class="primary" style="width:100%;margin-top:12px">Apply real keyframes to selected clip</button>
+<div class="log" id="nativeLog" role="status">Premiere 2026 UXP API required. Existing keyframes are protected.</div>
+</section>
+<section class="native-stage"><div class="section-head"><h3>Creator Zoom · Quick Actions</h3><span>Native Scale Keyframes</span></div>
+<div class="native-grid"><button class="outline" data-creatorzoom="creator-punch-in">Punch In +16%</button><button class="outline" data-creatorzoom="creator-punch-out">Punch Out</button><button class="outline" data-creatorzoom="creator-reaction">Reaction Hit</button><button class="outline" data-creatorzoom="creator-snap-zoom">Snap Zoom</button></div><p class="muted">Apply to one selected clip. These actions use the same editable native keyframes as the studio above.</p></section>
+<section class="library"><div class="section-head"><h3>Tools</h3><span>21 original + 3 creator modules · staged capabilities</span></div><input class="search" id="search" placeholder="Search tools..." autocomplete="off" aria-label="Search tools"/><div id="tools" class="tools" aria-label="Tool selector"></div></section>
+<section class="workspace"><div class="section-head"><h3 id="tool-title">Select a tool</h3><span id="tool-status">-</span></div><p id="tool-desc" class="muted">Choose a tool to configure its local processing.</p>
+<div id="fields"></div>
+<label class="field-label" for="source">Source file / folder</label><div class="path"><input id="source" spellcheck="false" placeholder="Use Browse or paste path"/><button id="browse" class="outline">Browse</button></div>
+<button id="fromSelection" class="outline" style="width:100%;margin-bottom:10px">Use selected Premiere audio/video clip as source</button><div id="selectedInfo" class="small" style="margin-bottom:12px">For captions, selects trimmed clip and aligns exported subtitle times to the sequence.</div>
+<div id="secondary" class="hide"><label class="field-label" for="second">Second media file</label><div class="path"><input id="second" placeholder="Second file path"/><button id="browseSecond" class="outline">Browse</button></div></div>
+<div id="imageArea" class="hide"><label class="field-label">Carousel images (2–20)</label><button id="browseImages" class="outline">Choose images</button><div class="small" id="imageCount">No images selected</div></div>
+<label class="field-label" for="output">Output destination (optional)</label><input id="output" spellcheck="false" placeholder="Auto-save next to source or in Videos/OG Tools"/>
+<div class="actions"><button id="run" class="primary">Run locally</button><button id="import" class="outline" disabled>Import output to Premiere</button></div>
+<div class="log" id="log" role="status">Engine offline. Open OG Tools Launcher from the Start menu or run the installer.</div>
+</section>
+<footer>Local-only by default · Originals are not overwritten · Save the Premiere project before editing.</footer>
+</main><script src="native/keyframes.js"></script><script src="native/selection.js"></script><script src="main.js"></script><script src="native/ui.js"></script></body></html>

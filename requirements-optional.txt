@@ -1,0 +1,5 @@
+faster-whisper
+rembg[cpu]
+opencv-python
+auto-editor
+yt-dlp

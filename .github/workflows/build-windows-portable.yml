@@ -1,0 +1,67 @@
+name: Build Portable Windows Engine (unverified Premiere integration)
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'engine/**'
+      - 'plugin/**'
+      - 'installer/**'
+      - '.github/workflows/build-windows-portable.yml'
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install bundler and AI library
+        run: python -m pip install --upgrade pip pyinstaller pillow faster-whisper
+      - name: Freeze local processing engine
+        shell: pwsh
+        run: >-
+          pyinstaller --noconfirm --clean --onedir --name OGToolsEngine
+          --paths . --collect-all faster_whisper --collect-all ctranslate2
+          --collect-all av --collect-all tokenizers --collect-all huggingface_hub
+          --collect-all PIL engine/launcher.py
+      - name: Get Windows FFmpeg
+        shell: pwsh
+        run: |
+          Invoke-WebRequest 'https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip' -OutFile $env:TEMP\og-ffmpeg.zip
+          Expand-Archive $env:TEMP\og-ffmpeg.zip -DestinationPath $env:TEMP\og-ffmpeg -Force
+          New-Item -ItemType Directory engine-bin -Force | Out-Null
+          $ff=Get-ChildItem $env:TEMP\og-ffmpeg -Recurse -Filter ffmpeg.exe | Select-Object -First 1
+          $probe=Get-ChildItem $env:TEMP\og-ffmpeg -Recurse -Filter ffprobe.exe | Select-Object -First 1
+          Copy-Item $ff.FullName engine-bin\ffmpeg.exe
+          Copy-Item $probe.FullName engine-bin\ffprobe.exe
+          Copy-Item -Recurse dist\OGToolsEngine engine-bin\OGToolsEngine
+      - name: Run executable smoke test
+        shell: pwsh
+        run: |
+          $p=Start-Process -PassThru -WindowStyle Hidden engine-bin\OGToolsEngine\OGToolsEngine.exe
+          try {
+            $ready=$false
+            for ($i=0;$i -lt 20;$i++) {
+              Start-Sleep -Seconds 1
+              try {
+                $r=Invoke-RestMethod http://127.0.0.1:8734/api/health -TimeoutSec 2
+                if ($r.ok -eq $true -and $r.capabilities.whisper -eq $true) {$ready=$true;break}
+              } catch {}
+            }
+            if (-not $ready) { throw 'Portable engine failed local HTTP health check' }
+          } finally { if (-not $p.HasExited) {Stop-Process -Id $p.Id -Force} }
+      - name: Produce zip with installer, plugin and portable engine
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory release -Force|Out-Null
+          Copy-Item plugin release\plugin -Recurse
+          Copy-Item engine release\engine -Recurse
+          Copy-Item engine-bin release\engine-bin -Recurse
+          Copy-Item installer release\installer -Recurse
+          Copy-Item INSTALL_OG_TOOLS.cmd release\INSTALL_OG_TOOLS.cmd
+          Copy-Item README_AR.md release\README_AR.md
+          Compress-Archive -Path release\* -DestinationPath OG_Tools_v0.8_Windows_Portable.zip -CompressionLevel Optimal
+      - uses: actions/upload-artifact@v4
+        with:
+          name: OG_Tools_v0.8_Windows_Portable
+          path: OG_Tools_v0.8_Windows_Portable.zip
