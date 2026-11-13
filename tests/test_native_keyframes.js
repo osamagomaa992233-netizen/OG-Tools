@@ -25,7 +25,7 @@ function mockPpro({existing=false,missing='',clipDuration=4,selectionCount=1}={}
   const ppro={Project:{getActiveProject:async()=>project},PointF:class PointF{constructor(x,y){this.x=x;this.y=y}},TickTime:{createWithSeconds:x=>({seconds:x})}};
   return {ppro,made};
 }
-test('presets are distinct and have 32 IDs',()=>{assert.equal(native.PRESETS.length,32);assert.equal(new Set(native.PRESETS).size,32)});
+test('presets are distinct and have 38 IDs',()=>{assert.equal(native.PRESETS.length,38);assert.equal(new Set(native.PRESETS).size,38)});
 test('animation curves use finite continuous parameters',()=>{
  for(const preset of native.PRESETS)for(let i=0;i<=30;i++){const o=native.valuesAt(preset,i/30);for(const v of Object.values(o))assert.ok(Number.isFinite(v),`${preset} invalid`) }
 });
@@ -79,4 +79,17 @@ test('creator punch-in creates held native Scale keyframes without altering text
 test('creator snap zoom has zoom in and out and stays near base',()=>{
  const at=[0,.15,.3,.7,1].map(t=>native.valuesAt('creator-snap-zoom',t).scale);
  assert.ok(at[1]>at[0]);assert.ok(at[2]>at[0]);assert.ok(at.at(-1)-1<.00001)
+});
+
+test('six original creator title motions generate valid editable whole-clip curves', async()=>{
+ const ids=['creator-hook-slam','creator-beat-nudge','creator-snap-hold','creator-recoil','creator-soft-land','creator-staccato'];
+ for(const id of ids){
+   assert.ok(native.PRESETS.includes(id));
+   const {ppro,made}=mockPpro();
+   const result=await native.applySelected(ppro,{preset:id,duration:1.2,samples:21});
+   assert.equal(result.nativeEditable,true);
+   assert.ok(result.channels.length>0);
+   assert.ok(result.keyframeCount>=21);
+   assert.ok(made.scale.keys.length===21 || made.position.keys.length===21);
+ }
 });
