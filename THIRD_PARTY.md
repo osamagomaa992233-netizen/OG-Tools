@@ -21,3 +21,7 @@ The OG Tools original code is personal-project source. Only use/download assets 
 `plugin/native/keyframes.js` is original code using the publicly documented Premiere UXP Action APIs. It is inspired by, but does not copy, Adobe's sample. Adobe APIs are used as references; the source code from Adobe sample is not redistributed.
 
 Creator captions v0.7 design references only (no copied source): [nicolaigaina/ai-video-captions](https://github.com/nicolaigaina/ai-video-captions) (MIT) and [sebetancurch/auto-caption](https://github.com/sebetancurch/auto-caption) (MIT). Their libraries and design patterns were studied, not embedded.
+
+
+## Creator text v0.9
+The new 12 trend styles and 6 whole-clip keyframe curves are independently authored. No VOLT assets, template files, or code are embedded; public website previews are used only for studying feature categories.
