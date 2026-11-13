@@ -28,7 +28,7 @@ const toolMeta=[
  ['tracking','Motion Tracking','optional','ROI tracker to CSV (OpenCV)'],
  ['safe-guide','Social Guides','ready','5 transparent social safe zones'],
  ['organizer','Project Organizer','ready','Safe non-destructive copy plan'],
- ['creator-captions','Creator Captions · Arabic / English','optional','Word-level local captions, 8 fresh creator styles, SRT + ASS + JSON'],
+ ['creator-captions','Creator Captions · Arabic / English','optional','Word-level local captions, 20 original creator styles, SRT + ASS + JSON'],
  ['creator-zoom','Creator Zoom Render','ready','Creator punch / snap / reaction zooms in exported MP4'],
  ['creator-speed-ramp','Creator Velocity Ramp','ready','5 eased-speed presets, audio preserved as offline MP4'],
 ];
@@ -62,7 +62,7 @@ function setTool(id){active=id;const meta=toolMeta.find(t=>t[0]===id);sel('tool-
  if(id==='captions'||id==='creator-captions'){
    createField('Language','language','select',['ar','en','auto'],'ar');createField('Whisper model','model','select',['tiny','base','small','medium','large-v3','turbo'],'small');
    if(id==='creator-captions'){
-     createField('Creator caption style','caption_style','select',['kinetic-pop','clean-focus','editorial-accent','word-flash','micro-bounce','mono-underline','hook-punch','quiet-lower'],'kinetic-pop');
+     createField('Creator caption style','caption_style','select',['kinetic-pop','clean-focus','editorial-accent','word-flash','micro-bounce','mono-underline','hook-punch','quiet-lower','active-spotlight','karaoke-trace','chip-stack','hook-slam','marker-glow','stagger-reveal','editorial-rail','boxed-podcast','micro-jolt','contrast-flip','sidecar-note','quiet-cinema'],'kinetic-pop');
      createField('Color palette','palette','select',['ivory','plum','acid','amber'],'ivory');
      createField('Caption font (installed font family)','caption_font','text',null,'');
      createField('Max words per phrase','max_words','number',null,3);
