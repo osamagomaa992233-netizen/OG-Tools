@@ -24,7 +24,7 @@ TOOLS=[
  {'id':'tracking','name':'Motion Tracking','state':'optional','summary':'OpenCV ROI tracking -> CSV, not Premiere keyframes'},
  {'id':'safe-guide','name':'Social Safe Zones','state':'ready','summary':'5 transparent safe zone PNG overlays'},
  {'id':'organizer','name':'Project Organizer','state':'ready','summary':'Non-destructive folder copy plan; not native bins'},
- {'id':'creator-captions','name':'Creator Captions (Arabic / English)','state':'optional','summary':'Word-level Whisper + 8 original ASS styles + SRT and timing JSON'},
+ {'id':'creator-captions','name':'Creator Captions (Arabic / English)','state':'optional','summary':'Word-level Whisper + 20 original ASS styles + SRT and timing JSON'},
  {'id':'creator-zoom','name':'Creator Zoom Video (file export)','state':'ready','summary':'Punch/Reaction/Snap zoom render; Premiere native preset is separate'},
  {'id':'creator-speed-ramp','name':'Creator Speed Ramp (file export)','state':'ready','summary':'Smooth sampled velocity presets; output copy, not native time remapping'},
 ]
