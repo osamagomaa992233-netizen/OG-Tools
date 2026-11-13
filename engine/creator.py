@@ -7,10 +7,10 @@ renderable but not a Premiere-native text graphic. SRT remains editable text.
 from __future__ import annotations
 import json, math, os, re, tempfile
 from pathlib import Path
-from . import media
+from . import media, trend_text
 
 STYLES = ('kinetic-pop','clean-focus','editorial-accent','word-flash',
-          'micro-bounce','mono-underline','hook-punch','quiet-lower')
+          'micro-bounce','mono-underline','hook-punch','quiet-lower') + tuple(trend_text.PRESETS)
 PALETTES = {
   'ivory': ('F3F1EA','CBEE7B','1D1B20'),
   'plum': ('F9F6EF','D3B6E4','30203E'),
@@ -72,6 +72,10 @@ def ass_from_groups(groups,style='kinetic-pop',palette='ivory',width=1080,height
                     font=None,position=.68):
     if style not in STYLES:raise ValueError('Unknown creator caption style')
     if palette not in PALETTES:raise ValueError('Unknown creator color palette')
+    if style in trend_text.PRESETS:
+        primary, accent, bg = PALETTES[palette]
+        return trend_text.generate(groups, style, white=primary, accent=accent,
+            background=bg, width=width, height=height, font=font, position=position)
     if not (320<=width<=4320 and 180<=height<=7680):raise ValueError('Invalid frame size')
     if not (.25<=position<=.9):raise ValueError('Position must be 0.25..0.9')
     color,accent,bg=PALETTES[palette]
