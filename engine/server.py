@@ -36,7 +36,7 @@ class Handler(BaseHTTPRequestHandler):
         if self.path=='/api/health':
             import importlib.util,shutil
             have=lambda name:importlib.util.find_spec(name) is not None
-            self.answer({'ok':True,'name':'OG Tools','version':'0.8.0','location':'localhost only',
+            self.answer({'ok':True,'name':'OG Tools','version':'0.9.0','location':'localhost only',
                'capabilities':{'ffmpeg':bool(shutil.which('ffmpeg')),'ffprobe':bool(shutil.which('ffprobe')),
                'pillow':have('PIL'),'whisper':have('faster_whisper'),'rembg':have('rembg'),
                'opencv':have('cv2'),'ytdlp':bool(shutil.which('yt-dlp'))}});return
