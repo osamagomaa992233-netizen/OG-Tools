@@ -14,7 +14,8 @@
     'drift-up','drift-down','scale-fade','drop-in','float-in','pulse',
     'shake-x','shake-y','tilt-in','overshoot',
     'creator-punch-in','creator-punch-out','creator-snap-zoom','creator-reaction',
-    'creator-jumpcut','creator-slow-push','creator-breathe','creator-focus-pull'
+    'creator-jumpcut','creator-slow-push','creator-breathe','creator-focus-pull',
+    'creator-hook-slam','creator-beat-nudge','creator-snap-hold','creator-recoil','creator-soft-land','creator-staccato'
   ]);
   const CHANNELS = ['position','scale','opacity','rotation'];
   const clamp = (x,lo,hi) => Math.max(lo,Math.min(hi,x));
@@ -35,6 +36,27 @@
       case 'creator-slow-push':o.scale=1+.08*easeInOut(t);break;
       case 'creator-breathe':o.scale=1+.07*Math.sin(Math.PI*t);break;
       case 'creator-focus-pull':o.scale=1+.12*easeInOut(t);o.x=.023*(1-easeInOut(t));break;
+      case 'creator-hook-slam':{
+        const hit=easeOut(clamp(t/.18,0,1));const settle=easeOut(clamp((t-.18)/.26,0,1));
+        o.scale=.62+.65*hit-.27*settle;o.rotation=-3+5*hit-2*settle;break;
+      }
+      case 'creator-beat-nudge':{
+        const envelope=Math.pow(1-t,2);o.x=.022*Math.sin(Math.PI*11*t)*envelope;
+        o.rotation=1.6*Math.sin(Math.PI*7*t)*envelope;break;
+      }
+      case 'creator-snap-hold':o.scale=1+.17*easeOut(clamp(t/.11,0,1));break;
+      case 'creator-recoil':{
+        const hit=easeOut(clamp(t/.1,0,1));const settle=easeOut(clamp((t-.1)/.3,0,1));
+        o.scale=1+.28*hit-.23*settle;break;
+      }
+      case 'creator-soft-land':{
+        const land=easeOut(clamp(t/.32,0,1));o.y=-.14*(1-land);o.scale=.88+.12*land;
+        o.opacity=clamp(t/.16,0,1);break;
+      }
+      case 'creator-staccato':{
+        const burst=t<.1?easeOut(t/.1):t<.26?1:1-easeOut((t-.26)/.2);
+        o.scale=1+.16*burst;o.rotation=2.5*burst;break;
+      }
       case 'fade-in': o.opacity=e;break;
       case 'fade-out': o.opacity=1-e;break;
       case 'slide-up':o.y=.21*u;o.opacity=e;break;
